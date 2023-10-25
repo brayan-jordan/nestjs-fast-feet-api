@@ -20,6 +20,14 @@ export class Recipient extends Entity<RecipientProps> {
     return this.props.password
   }
 
+  set name(name: string) {
+    this.props.name = name
+  }
+
+  set cpf(cpf: string) {
+    this.props.cpf = cpf
+  }
+
   static create(props: RecipientProps, id?: UniqueEntityID) {
     const recipient = new Recipient(
       {
