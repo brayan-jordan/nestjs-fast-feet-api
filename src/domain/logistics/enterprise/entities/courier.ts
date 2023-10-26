@@ -28,6 +28,10 @@ export class Courier extends Entity<CourierProps> {
     this.props.cpf = cpf
   }
 
+  set password(password: string) {
+    this.props.password = password
+  }
+
   static create(props: CourierProps, id?: UniqueEntityID) {
     const courier = new Courier(
       {
