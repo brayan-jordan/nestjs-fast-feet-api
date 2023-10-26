@@ -1,5 +1,9 @@
-import { DeliveriesRepository } from '@/domain/logistics/application/repositories/deliveries-repository'
+import {
+  DeliveriesRepository,
+  FetchNearbyDeliveriesRequest,
+} from '@/domain/logistics/application/repositories/deliveries-repository'
 import { Delivery } from '@/domain/logistics/enterprise/entities/delivery'
+import { getDistanceBetweenCoordinates } from 'utils/get-distance-between-coordinates'
 
 export class InMemoryDeliveriesRepository implements DeliveriesRepository {
   public items: Delivery[] = []
@@ -28,5 +32,34 @@ export class InMemoryDeliveriesRepository implements DeliveriesRepository {
     const index = this.items.findIndex((item) => item.id === delivery.id)
 
     this.items[index] = delivery
+  }
+
+  async fetchNearbyDeliveries(params: FetchNearbyDeliveriesRequest) {
+    const MAX_DISTANCE_IN_KILOMETERS = 10
+
+    return this.items.filter((item) => {
+      const distance = getDistanceBetweenCoordinates(
+        {
+          latitude: params.latitude,
+          longitude: params.longitude,
+        },
+        {
+          latitude: item.latitude,
+          longitude: item.longitude,
+        },
+      )
+
+      return distance < MAX_DISTANCE_IN_KILOMETERS
+    })
+  }
+
+  async fetchDeliveriesFromCourier(courierId: string) {
+    return this.items.filter((item) => item.courierId.toString() === courierId)
+  }
+
+  async fetchDeliveriesFromRecipient(recipientId: string) {
+    return this.items.filter(
+      (item) => item.recipientId.toString() === recipientId,
+    )
   }
 }
