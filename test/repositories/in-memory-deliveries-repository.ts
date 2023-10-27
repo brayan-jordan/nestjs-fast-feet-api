@@ -1,3 +1,4 @@
+import { DomainEvents } from '@/core/events/domain-events'
 import {
   DeliveriesRepository,
   FetchNearbyDeliveriesRequest,
@@ -32,6 +33,8 @@ export class InMemoryDeliveriesRepository implements DeliveriesRepository {
     const index = this.items.findIndex((item) => item.id === delivery.id)
 
     this.items[index] = delivery
+
+    DomainEvents.dispatchEventsForAggregate(delivery.id)
   }
 
   async fetchNearbyDeliveries(params: FetchNearbyDeliveriesRequest) {

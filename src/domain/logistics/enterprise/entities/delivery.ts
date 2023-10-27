@@ -1,5 +1,6 @@
-import { Entity } from '@/core/entities/entity'
+import { AggregateRoot } from '@/core/entities/aggregate-root'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
+import { DeliveryStatusChangedEvent } from '../events/delivery-status-changed-event'
 
 export interface DeliveryProps {
   recipientId: UniqueEntityID
@@ -12,7 +13,7 @@ export interface DeliveryProps {
   returnedAt?: Date | null
 }
 
-export class Delivery extends Entity<DeliveryProps> {
+export class Delivery extends AggregateRoot<DeliveryProps> {
   get recipientId() {
     return this.props.recipientId
   }
@@ -45,6 +46,24 @@ export class Delivery extends Entity<DeliveryProps> {
     return this.props.longitude
   }
 
+  get status() {
+    if (this.props.returnedAt) {
+      return 'Devolvido'
+    }
+
+    if (this.props.deliveredAt) {
+      return 'Entregue'
+    }
+
+    if (this.props.collectedAt) {
+      return 'Coletado'
+    }
+
+    if (this.props.availableToPickupAt) {
+      return 'Disponível para coleta'
+    }
+  }
+
   set latitude(latitude: number) {
     this.props.latitude = latitude
   }
@@ -55,18 +74,26 @@ export class Delivery extends Entity<DeliveryProps> {
 
   set availableToPickupAt(availableToPickupAt: Date) {
     this.props.availableToPickupAt = availableToPickupAt
+
+    this.addDomainEvent(new DeliveryStatusChangedEvent(this))
   }
 
   set collectedAt(collectedAt: Date) {
     this.props.collectedAt = collectedAt
+
+    this.addDomainEvent(new DeliveryStatusChangedEvent(this))
   }
 
   set deliveredAt(deliveredAt: Date) {
     this.props.deliveredAt = deliveredAt
+
+    this.addDomainEvent(new DeliveryStatusChangedEvent(this))
   }
 
   set returnedAt(returnedAt: Date) {
     this.props.returnedAt = returnedAt
+
+    this.addDomainEvent(new DeliveryStatusChangedEvent(this))
   }
 
   static create(props: DeliveryProps, id?: UniqueEntityID) {
