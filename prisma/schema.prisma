@@ -1,0 +1,52 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String @id @default(uuid())
+  name     String
+  cpf      String @unique
+  password String
+
+  notifications Notification[]
+
+  isRecipientInDeliveries Delivery[] @relation("recipient_delivery_relation")
+
+  isCourierInDeliveries Delivery[] @relation("courier_delivery_relation")
+
+  @@map("users")
+}
+
+model Delivery {
+  id                  String    @id @default(uuid())
+  latitude            Decimal
+  longitude           Decimal
+  availableToPickupAt DateTime?
+  collectedAt         DateTime?
+  deliveredAt         DateTime?
+  returnedAt          DateTime?
+
+  recipient   User   @relation("recipient_delivery_relation", fields: [recipientId], references: [id])
+  recipientId String @map("recipient_id")
+
+  courier   User   @relation("courier_delivery_relation", fields: [courierId], references: [id])
+  courierId String @map("courier_id")
+}
+
+model Notification {
+  id        String    @id @default(uuid())
+  title     String
+  content   String
+  readAt    DateTime? @map("read_at")
+  createdAt DateTime  @default(now()) @map("created_at")
+
+  recipient   User   @relation(fields: [recipientId], references: [id])
+  recipientId String @map("recipient_id")
+
+  @@map("notifications")
+}
