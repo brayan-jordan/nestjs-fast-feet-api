@@ -22,6 +22,7 @@ export class PrismaRecipientMapper {
       name: recipient.name,
       cpf: recipient.cpf,
       password: recipient.password,
+      role: recipient.role,
     }
   }
 }

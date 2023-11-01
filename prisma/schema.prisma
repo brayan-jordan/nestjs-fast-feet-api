@@ -7,11 +7,19 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum UserRole {
+  ADMIN
+  COURIER
+  RECIPIENT
+}
+
 model User {
   id       String @id @default(uuid())
   name     String
   cpf      String @unique
   password String
+
+  role UserRole
 
   notifications Notification[]
 

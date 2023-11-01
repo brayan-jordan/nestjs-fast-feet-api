@@ -22,6 +22,7 @@ export class PrismaCourierMapper {
       name: courier.name,
       cpf: courier.cpf,
       password: courier.password,
+      role: courier.role,
     }
   }
 }

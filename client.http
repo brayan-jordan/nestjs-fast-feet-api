@@ -1,0 +1,13 @@
+@baseUrl = http://localhost:3333
+@authToken = {{authenticate.response.body.access_token}}
+
+# @name authenticate
+POST {{baseUrl}}/sessions
+Content-Type: application/json
+
+{
+  "cpf": "123.456.789-01",
+  "password": "123456"
+}
+
+###

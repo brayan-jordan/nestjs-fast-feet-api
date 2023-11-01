@@ -4,10 +4,15 @@ export interface UserProps {
   name: string
   cpf: string
   password: string
+}
+
+export interface RoleProps {
   role: 'ADMIN' | 'COURIER' | 'RECIPIENT'
 }
 
-export abstract class User<Props extends UserProps> extends Entity<Props> {
+export abstract class User<
+  Props extends UserProps & RoleProps,
+> extends Entity<Props> {
   get name() {
     return this.props.name
   }
