@@ -3,6 +3,7 @@ import { Delivery } from '../../enterprise/entities/delivery'
 export interface FetchNearbyDeliveriesRequest {
   latitude: number
   longitude: number
+  courierId: string
 }
 
 export abstract class DeliveriesRepository {

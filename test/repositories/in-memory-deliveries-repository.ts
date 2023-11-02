@@ -52,7 +52,10 @@ export class InMemoryDeliveriesRepository implements DeliveriesRepository {
         },
       )
 
-      return distance < MAX_DISTANCE_IN_KILOMETERS
+      return (
+        distance < MAX_DISTANCE_IN_KILOMETERS &&
+        item.courierId.toString() === params.courierId
+      )
     })
   }
 

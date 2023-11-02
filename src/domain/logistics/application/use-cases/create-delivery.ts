@@ -4,6 +4,7 @@ import { DeliveriesRepository } from '../repositories/deliveries-repository'
 import { RecipientsRepository } from '../repositories/recipients-repository'
 import { CouriersRepository } from '../repositories/couriers-repository'
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
+import { Injectable } from '@nestjs/common'
 
 interface CreateDeliveryUseCaseRequest {
   recipientId: string
@@ -23,6 +24,7 @@ type CreateDeliveryUseCaseResponse = Either<
   }
 >
 
+@Injectable()
 export class CreateDeliveryUseCase {
   constructor(
     private deliveriesRepository: DeliveriesRepository,

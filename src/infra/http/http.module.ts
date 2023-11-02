@@ -29,6 +29,22 @@ import { ChangeRecipientPasswordController } from './controllers/change-recipien
 import { ChangeRecipientPasswordUseCase } from '@/domain/logistics/application/use-cases/change-recipient-password'
 import { ChangeCourierPasswordController } from './controllers/change-courier-password.controller'
 import { ChangeCourierPasswordUseCase } from '@/domain/logistics/application/use-cases/change-courier-password'
+import { FetchNearbyDeliveriesController } from './controllers/fetch-nearby-deliveries.controller'
+import { FetchNearbyDeliveriesUseCase } from '@/domain/logistics/application/use-cases/fetch-nearby-deliveries'
+import { CreateDeliveryController } from './controllers/create-delivery.controller'
+import { CreateDeliveryUseCase } from '@/domain/logistics/application/use-cases/create-delivery'
+import { EditDeliveryController } from './controllers/edit-delivery.controller'
+import { EditDeliveryUseCase } from '@/domain/logistics/application/use-cases/edit-delivery'
+import { DeleteDeliveryController } from './controllers/delete-delivery.controller'
+import { DeleteDeliveryUseCase } from '@/domain/logistics/application/use-cases/delete-delivery'
+import { MakeDeliveryAvailableToPickupUseCase } from '@/domain/logistics/application/use-cases/make-delivery-available-to-pickup'
+import { MakeDeliveryAvailableToPickupController } from './controllers/make-delivery-available-to-pickup.controller'
+import { MakeDeliveryCollectedController } from './controllers/make-delivery-collected.controller'
+import { MakeDeliveryCollectedUseCase } from '@/domain/logistics/application/use-cases/make-delivery-collected'
+import { MakeDeliveryDeliveredController } from './controllers/make-delivery-delivered.controller'
+import { MakeDeliveryDeliveredUseCase } from '@/domain/logistics/application/use-cases/make-delivery-delivered'
+import { MakeDeliveryReturnedController } from './controllers/make-delivery-returned.controller'
+import { MakeDeliveryReturnedUseCase } from '@/domain/logistics/application/use-cases/make-delivery-returned'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -47,6 +63,14 @@ import { ChangeCourierPasswordUseCase } from '@/domain/logistics/application/use
     FetchRecipientsController,
     ChangeRecipientPasswordController,
     ChangeCourierPasswordController,
+    FetchNearbyDeliveriesController,
+    CreateDeliveryController,
+    EditDeliveryController,
+    DeleteDeliveryController,
+    MakeDeliveryAvailableToPickupController,
+    MakeDeliveryCollectedController,
+    MakeDeliveryDeliveredController,
+    MakeDeliveryReturnedController,
   ],
   providers: [
     AuthenticateUseCase,
@@ -63,6 +87,14 @@ import { ChangeCourierPasswordUseCase } from '@/domain/logistics/application/use
     FetchRecipientsUseCase,
     ChangeRecipientPasswordUseCase,
     ChangeCourierPasswordUseCase,
+    FetchNearbyDeliveriesUseCase,
+    CreateDeliveryUseCase,
+    EditDeliveryUseCase,
+    DeleteDeliveryUseCase,
+    MakeDeliveryAvailableToPickupUseCase,
+    MakeDeliveryCollectedUseCase,
+    MakeDeliveryDeliveredUseCase,
+    MakeDeliveryReturnedUseCase,
   ],
 })
 export class HttpModule {}

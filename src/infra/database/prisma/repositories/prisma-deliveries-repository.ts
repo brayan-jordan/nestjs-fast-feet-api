@@ -50,10 +50,12 @@ export class PrismaDeliveriesRepository implements DeliveriesRepository {
   async fetchNearbyDeliveries({
     latitude,
     longitude,
+    courierId,
   }: FetchNearbyDeliveriesRequest): Promise<Delivery[]> {
     const deliveries = await this.prisma.$queryRaw<[PrismaDelivery]>`
       SELECT * FROM deliveries
       WHERE ( 6371 * acos( cos( radians(${latitude}) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(${longitude}) ) + sin( radians(${latitude}) ) * sin( radians( latitude ) ) ) ) <= 10
+      AND courier_id = ${courierId}
     `
 
     return deliveries.map(PrismaDeliveryMapper.toDomain)
