@@ -45,6 +45,9 @@ model Delivery {
   courier   User   @relation("courier_delivery_relation", fields: [courierId], references: [id])
   courierId String @map("courier_id")
 
+  attachmentProopOfShipping   Attachment? @relation(fields: [attachmentProopOfShippingId], references: [id])
+  attachmentProopOfShippingId String?     @unique @map("attachment_proop_of_shipping_id")
+
   @@map("deliveries")
 }
 
@@ -59,4 +62,14 @@ model Notification {
   recipientId String @map("recipient_id")
 
   @@map("notifications")
+}
+
+model Attachment {
+  id    String @id @default(uuid())
+  title String
+  url   String
+
+  isFromDelivery Delivery?
+
+  @@map("attachments")
 }

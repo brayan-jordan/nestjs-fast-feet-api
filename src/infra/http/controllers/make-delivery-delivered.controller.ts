@@ -11,7 +11,7 @@ import { UserPayload } from '@/infra/auth/jwt.strategy'
 import { CurrentUser } from '@/infra/auth/current-user-decorator'
 
 @Roles('COURIER')
-@Controller('/deliveries/:id/delivered')
+@Controller('/deliveries/:id/delivered/:attachmentId')
 export class MakeDeliveryDeliveredController {
   constructor(private makeDeliveryDelivered: MakeDeliveryDeliveredUseCase) {}
 
@@ -19,6 +19,7 @@ export class MakeDeliveryDeliveredController {
   @HttpCode(204)
   async handle(
     @Param('id') deliveryId: string,
+    @Param('attachmentId') attachmentId: string,
     @CurrentUser() user: UserPayload,
   ) {
     const userId = user.sub
@@ -26,6 +27,7 @@ export class MakeDeliveryDeliveredController {
     const result = await this.makeDeliveryDelivered.execute({
       deliveryId,
       courierId: userId,
+      attachmentId,
     })
 
     if (result.isLeft()) {

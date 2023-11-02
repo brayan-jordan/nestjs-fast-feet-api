@@ -4,10 +4,12 @@ import { DeliveriesRepository } from '../repositories/deliveries-repository'
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
 import { NotAllowedError } from '@/core/errors/errors/not-allowed-error'
 import { Injectable } from '@nestjs/common'
+import { AttachmentsRepository } from '../repositories/attachments-repository'
 
 interface MakeDeliveryDeliveredUseCaseRequest {
   deliveryId: string
   courierId: string
+  attachmentId: string
 }
 
 type MakeDeliveryDeliveredUseCaseResponse = Either<
@@ -19,11 +21,15 @@ type MakeDeliveryDeliveredUseCaseResponse = Either<
 
 @Injectable()
 export class MakeDeliveryDeliveredUseCase {
-  constructor(private deliveriesRepository: DeliveriesRepository) {}
+  constructor(
+    private deliveriesRepository: DeliveriesRepository,
+    private attachmentsRepository: AttachmentsRepository,
+  ) {}
 
   async execute({
     deliveryId,
     courierId,
+    attachmentId,
   }: MakeDeliveryDeliveredUseCaseRequest): Promise<MakeDeliveryDeliveredUseCaseResponse> {
     const delivery = await this.deliveriesRepository.findById(deliveryId)
 
@@ -35,7 +41,14 @@ export class MakeDeliveryDeliveredUseCase {
       return left(new NotAllowedError())
     }
 
+    const attachment = await this.attachmentsRepository.findById(attachmentId)
+
+    if (!attachment) {
+      return left(new ResourceNotFoundError())
+    }
+
     delivery.deliveredAt = new Date()
+    delivery.attachmentProopOfShippingId = attachment.id
 
     await this.deliveriesRepository.save(delivery)
 

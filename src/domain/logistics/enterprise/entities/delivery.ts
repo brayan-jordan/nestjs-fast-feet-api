@@ -5,6 +5,7 @@ import { DeliveryStatusChangedEvent } from '../events/delivery-status-changed-ev
 export interface DeliveryProps {
   recipientId: UniqueEntityID
   courierId: UniqueEntityID
+  attachmentProopOfShippingId?: UniqueEntityID
   latitude: number
   longitude: number
   availableToPickupAt?: Date | null
@@ -44,6 +45,10 @@ export class Delivery extends AggregateRoot<DeliveryProps> {
 
   get longitude() {
     return this.props.longitude
+  }
+
+  get attachmentProopOfShippingId() {
+    return this.props.attachmentProopOfShippingId
   }
 
   get status() {
@@ -94,6 +99,10 @@ export class Delivery extends AggregateRoot<DeliveryProps> {
     this.props.returnedAt = returnedAt
 
     this.addDomainEvent(new DeliveryStatusChangedEvent(this))
+  }
+
+  set attachmentProopOfShippingId(attachmentProopOfShippingId: UniqueEntityID) {
+    this.props.attachmentProopOfShippingId = attachmentProopOfShippingId
   }
 
   static create(props: DeliveryProps, id?: UniqueEntityID) {

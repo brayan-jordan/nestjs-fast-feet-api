@@ -45,9 +45,12 @@ import { MakeDeliveryDeliveredController } from './controllers/make-delivery-del
 import { MakeDeliveryDeliveredUseCase } from '@/domain/logistics/application/use-cases/make-delivery-delivered'
 import { MakeDeliveryReturnedController } from './controllers/make-delivery-returned.controller'
 import { MakeDeliveryReturnedUseCase } from '@/domain/logistics/application/use-cases/make-delivery-returned'
+import { UploadAttachmentController } from './controllers/upload-attachment.controller'
+import { UploadAndCreateAttachmentUseCase } from '@/domain/logistics/application/use-cases/upload-and-create-attachment'
+import { StorageModule } from '../storage/storage.module'
 
 @Module({
-  imports: [DatabaseModule, CryptographyModule],
+  imports: [DatabaseModule, CryptographyModule, StorageModule],
   controllers: [
     AuthenticateController,
     CreateCourierController,
@@ -71,6 +74,7 @@ import { MakeDeliveryReturnedUseCase } from '@/domain/logistics/application/use-
     MakeDeliveryCollectedController,
     MakeDeliveryDeliveredController,
     MakeDeliveryReturnedController,
+    UploadAttachmentController,
   ],
   providers: [
     AuthenticateUseCase,
@@ -95,6 +99,7 @@ import { MakeDeliveryReturnedUseCase } from '@/domain/logistics/application/use-
     MakeDeliveryCollectedUseCase,
     MakeDeliveryDeliveredUseCase,
     MakeDeliveryReturnedUseCase,
+    UploadAndCreateAttachmentUseCase,
   ],
 })
 export class HttpModule {}
