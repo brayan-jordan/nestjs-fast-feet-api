@@ -3,6 +3,7 @@ import { Courier } from '../../enterprise/entities/courier'
 import { HashGenerator } from '../cryptography/hash-generator'
 import { CouriersRepository } from '../repositories/couriers-repository'
 import { ResourceAlreadyExistsError } from './errors/resource-already-exists-error'
+import { Injectable } from '@nestjs/common'
 
 interface CreateCourierUseCaseRequest {
   name: string
@@ -17,6 +18,7 @@ type CreateCourierUseCaseResponse = Either<
   }
 >
 
+@Injectable()
 export class CreateCourierUseCase {
   constructor(
     private couriersRepository: CouriersRepository,

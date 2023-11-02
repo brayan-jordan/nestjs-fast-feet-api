@@ -1,18 +1,15 @@
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
-import {
-  Courier,
-  CourierProps,
-} from '@/domain/logistics/enterprise/entities/courier'
-import { PrismaCourierMapper } from '@/infra/database/prisma/mappers/prisma-courier-mapper'
+import { Admin, AdminProps } from '@/domain/logistics/enterprise/entities/admin'
+import { PrismaAdminMapper } from '@/infra/database/prisma/mappers/prisma-admin-mapper'
 import { PrismaService } from '@/infra/database/prisma/prisma.service'
 import { faker } from '@faker-js/faker'
 import { Injectable } from '@nestjs/common'
 
-export function makeCourier(
-  override: Partial<CourierProps> = {},
+export function makeAdmin(
+  override: Partial<AdminProps> = {},
   id?: UniqueEntityID,
 ) {
-  const courier = Courier.create(
+  const admin = Admin.create(
     {
       cpf: faker.string.sample(14),
       name: faker.person.fullName(),
@@ -22,20 +19,20 @@ export function makeCourier(
     id,
   )
 
-  return courier
+  return admin
 }
 
 @Injectable()
-export class CourierFactory {
+export class AdminFactory {
   constructor(private prisma: PrismaService) {}
 
-  async makePrismaCourier(data: Partial<CourierProps> = {}): Promise<Courier> {
-    const courier = makeCourier(data)
+  async makePrismaAdmin(data: Partial<AdminProps> = {}): Promise<Admin> {
+    const admin = makeAdmin(data)
 
     await this.prisma.user.create({
-      data: PrismaCourierMapper.toPersistence(courier),
+      data: PrismaAdminMapper.toPersistence(admin),
     })
 
-    return courier
+    return admin
   }
 }
