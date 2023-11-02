@@ -7,6 +7,7 @@ import {
   FetchNearbyDeliveriesRequest,
 } from '@/domain/logistics/application/repositories/deliveries-repository'
 import { Delivery as PrismaDelivery } from '@prisma/client'
+import { DomainEvents } from '@/core/events/domain-events'
 
 @Injectable()
 export class PrismaDeliveriesRepository implements DeliveriesRepository {
@@ -27,6 +28,8 @@ export class PrismaDeliveriesRepository implements DeliveriesRepository {
       where: { id: data.id },
       data,
     })
+
+    DomainEvents.dispatchEventsForAggregate(delivery.id)
   }
 
   async findById(id: string): Promise<Delivery | null> {

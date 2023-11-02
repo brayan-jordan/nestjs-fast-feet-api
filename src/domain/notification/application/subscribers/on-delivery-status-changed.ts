@@ -2,7 +2,9 @@ import { DomainEvents } from '@/core/events/domain-events'
 import { EventHandler } from '@/core/events/event-handler'
 import { SendNotificationUseCase } from '../use-cases/send-notification'
 import { DeliveryStatusChangedEvent } from '@/domain/logistics/enterprise/events/delivery-status-changed-event'
+import { Injectable } from '@nestjs/common'
 
+@Injectable()
 export class OnDeliveryStatusChanged implements EventHandler {
   constructor(private sendNotificationUseCase: SendNotificationUseCase) {
     this.setupSubscriptions()
