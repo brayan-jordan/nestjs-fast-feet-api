@@ -44,6 +44,8 @@ model Delivery {
 
   courier   User   @relation("courier_delivery_relation", fields: [courierId], references: [id])
   courierId String @map("courier_id")
+
+  @@map("deliveries")
 }
 
 model Notification {
