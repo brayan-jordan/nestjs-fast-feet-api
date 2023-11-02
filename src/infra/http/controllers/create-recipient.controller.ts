@@ -8,29 +8,29 @@ import {
 } from '@nestjs/common'
 import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe'
 import { z } from 'zod'
-import { CreateCourierUseCase } from '@/domain/logistics/application/use-cases/create-courier'
+import { CreateRecipientUseCase } from '@/domain/logistics/application/use-cases/create-recipient'
 import { ResourceAlreadyExistsError } from '@/domain/logistics/application/use-cases/errors/resource-already-exists-error'
 import { Roles } from '@/infra/auth/roles.decorator'
 
-const createCourierBodySchema = z.object({
+const createRecipientBodySchema = z.object({
   name: z.string(),
   cpf: z.string(),
   password: z.string().min(6),
 })
 
-type CreateCourierBodySchema = z.infer<typeof createCourierBodySchema>
+type CreateRecipientBodySchema = z.infer<typeof createRecipientBodySchema>
 
 @Roles('ADMIN')
-@Controller('/couriers')
-export class CreateCourierController {
-  constructor(private createCourier: CreateCourierUseCase) {}
+@Controller('/recipients')
+export class CreateRecipientController {
+  constructor(private createRecipient: CreateRecipientUseCase) {}
 
   @Post()
-  @UsePipes(new ZodValidationPipe(createCourierBodySchema))
-  async handle(@Body() body: CreateCourierBodySchema) {
+  @UsePipes(new ZodValidationPipe(createRecipientBodySchema))
+  async handle(@Body() body: CreateRecipientBodySchema) {
     const { cpf, password, name } = body
 
-    const result = await this.createCourier.execute({
+    const result = await this.createRecipient.execute({
       cpf,
       password,
       name,

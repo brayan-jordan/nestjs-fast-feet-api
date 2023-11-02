@@ -7,7 +7,7 @@ import { Test } from '@nestjs/testing'
 import request from 'supertest'
 import { AdminFactory } from 'test/factories/make-admin'
 
-describe('Create Courier (E2E)', () => {
+describe('Create Recipient (E2E)', () => {
   let app: INestApplication
   let prisma: PrismaService
   let jwt: JwtService
@@ -27,29 +27,29 @@ describe('Create Courier (E2E)', () => {
     await app.init()
   })
 
-  test('[POST] /couriers', async () => {
+  test('[POST] /recipients', async () => {
     const user = await adminFactory.makePrismaAdmin()
 
     const accessToken = jwt.sign({ sub: user.id.toString(), role: user.role })
 
     const response = await request(app.getHttpServer())
-      .post('/couriers')
+      .post('/recipients')
       .set('Authorization', `Bearer ${accessToken}`)
       .send({
         cpf: '123.456.789-00',
-        name: 'New Courier',
+        name: 'New Recipient',
         password: '123456',
       })
 
     expect(response.statusCode).toBe(201)
 
-    const courierOnDatabase = await prisma.user.findUnique({
+    const recipientOnDatabase = await prisma.user.findUnique({
       where: {
         cpf: '123.456.789-00',
-        role: 'COURIER',
+        role: 'RECIPIENT',
       },
     })
 
-    expect(courierOnDatabase).toBeTruthy()
+    expect(recipientOnDatabase).toBeTruthy()
   })
 })

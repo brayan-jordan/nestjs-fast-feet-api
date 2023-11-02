@@ -3,6 +3,7 @@ import { Recipient } from '../../enterprise/entities/recipient'
 import { HashGenerator } from '../cryptography/hash-generator'
 import { RecipientsRepository } from '../repositories/recipients-repository'
 import { ResourceAlreadyExistsError } from './errors/resource-already-exists-error'
+import { Injectable } from '@nestjs/common'
 
 interface CreateRecipientUseCaseRequest {
   name: string
@@ -17,6 +18,7 @@ type CreateRecipientUseCaseResponse = Either<
   }
 >
 
+@Injectable()
 export class CreateRecipientUseCase {
   constructor(
     private recipientsRepository: RecipientsRepository,

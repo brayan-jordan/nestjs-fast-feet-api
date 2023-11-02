@@ -19,4 +19,6 @@ export abstract class DeliveriesRepository {
   ): Promise<Delivery[]>
 
   abstract fetchDeliveriesFromCourier(courierId: string): Promise<Delivery[]>
+
+  abstract findMany(): Promise<Delivery[]>
 }

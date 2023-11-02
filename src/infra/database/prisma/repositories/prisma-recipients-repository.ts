@@ -54,4 +54,10 @@ export class PrismaRecipientsRepository implements RecipientsRepository {
       where: { id: recipient.id.toString() },
     })
   }
+
+  async findMany(): Promise<Recipient[]> {
+    const recipients = await this.prisma.user.findMany()
+
+    return recipients.map(PrismaRecipientMapper.toDomain)
+  }
 }

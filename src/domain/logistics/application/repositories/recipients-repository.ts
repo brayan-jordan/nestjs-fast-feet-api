@@ -6,4 +6,5 @@ export abstract class RecipientsRepository {
   abstract findById(id: string): Promise<Recipient | null>
   abstract delete(recipient: Recipient): Promise<void>
   abstract save(recipient: Recipient): Promise<void>
+  abstract findMany(): Promise<Recipient[]>
 }

@@ -54,4 +54,10 @@ export class PrismaCouriersRepository implements CouriersRepository {
       where: { id: courier.id.toString() },
     })
   }
+
+  async findMany(): Promise<Courier[]> {
+    const couriers = await this.prisma.user.findMany()
+
+    return couriers.map(PrismaCourierMapper.toDomain)
+  }
 }

@@ -65,4 +65,8 @@ export class InMemoryDeliveriesRepository implements DeliveriesRepository {
       (item) => item.recipientId.toString() === recipientId,
     )
   }
+
+  async findMany(): Promise<Delivery[]> {
+    return this.items
+  }
 }

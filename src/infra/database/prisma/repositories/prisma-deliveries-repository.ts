@@ -74,4 +74,10 @@ export class PrismaDeliveriesRepository implements DeliveriesRepository {
 
     return deliveries.map(PrismaDeliveryMapper.toDomain)
   }
+
+  async findMany(): Promise<Delivery[]> {
+    const deliveries = await this.prisma.delivery.findMany()
+
+    return deliveries.map(PrismaDeliveryMapper.toDomain)
+  }
 }

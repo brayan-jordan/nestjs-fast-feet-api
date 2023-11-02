@@ -3,6 +3,7 @@ import { Courier } from '../../enterprise/entities/courier'
 import { CouriersRepository } from '../repositories/couriers-repository'
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
 import { HashGenerator } from '../cryptography/hash-generator'
+import { Injectable } from '@nestjs/common'
 
 interface ChangeCourierPasswordUseCaseRequest {
   courierId: string
@@ -16,6 +17,7 @@ type ChangeCourierPasswordUseCaseResponse = Either<
   }
 >
 
+@Injectable()
 export class ChangeCourierPasswordUseCase {
   constructor(
     private couriersRepository: CouriersRepository,

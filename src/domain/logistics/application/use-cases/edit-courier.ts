@@ -3,6 +3,7 @@ import { Courier } from '../../enterprise/entities/courier'
 import { CouriersRepository } from '../repositories/couriers-repository'
 import { ResourceAlreadyExistsError } from './errors/resource-already-exists-error'
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
+import { Injectable } from '@nestjs/common'
 
 interface EditCourierUseCaseRequest {
   courierId: string
@@ -17,6 +18,7 @@ type EditCourierUseCaseResponse = Either<
   }
 >
 
+@Injectable()
 export class EditCourierUseCase {
   constructor(private couriersRepository: CouriersRepository) {}
 

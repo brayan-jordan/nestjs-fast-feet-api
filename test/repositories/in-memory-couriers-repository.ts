@@ -39,4 +39,8 @@ export class InMemoryCouriersRepository implements CouriersRepository {
 
     this.items[index] = courier
   }
+
+  async findMany(): Promise<Courier[]> {
+    return this.items
+  }
 }

@@ -23,6 +23,7 @@ export class PrismaDeliveryMapper {
     delivery: DomainDelivery,
   ): Prisma.DeliveryUncheckedCreateInput {
     return {
+      id: delivery.id.toString(),
       courierId: delivery.courierId.toString(),
       recipientId: delivery.recipientId.toString(),
       latitude: delivery.latitude,

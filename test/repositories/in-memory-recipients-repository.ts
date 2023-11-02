@@ -39,4 +39,8 @@ export class InMemoryRecipientsRepository implements RecipientsRepository {
 
     this.items[index] = recipient
   }
+
+  async findMany(): Promise<Recipient[]> {
+    return this.items
+  }
 }

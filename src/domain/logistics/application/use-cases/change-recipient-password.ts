@@ -3,6 +3,7 @@ import { Recipient } from '../../enterprise/entities/recipient'
 import { RecipientsRepository } from '../repositories/recipients-repository'
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
 import { HashGenerator } from '../cryptography/hash-generator'
+import { Injectable } from '@nestjs/common'
 
 interface ChangeRecipientPasswordUseCaseRequest {
   recipientId: string
@@ -16,6 +17,7 @@ type ChangeRecipientPasswordUseCaseResponse = Either<
   }
 >
 
+@Injectable()
 export class ChangeRecipientPasswordUseCase {
   constructor(
     private recipientsRepository: RecipientsRepository,
